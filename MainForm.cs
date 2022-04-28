@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 namespace wxCT4C;
 
 public partial class MainForm : Form
@@ -47,6 +48,7 @@ public partial class MainForm : Form
     internal List<string> debug_search_resource_compiler_directory = new();
     internal List<string> release_search_resource_compiler_directory = new();
     cls_Files files;
+    bool ini_Flag = true;
     public MainForm()
     {
         InitializeComponent();
@@ -265,20 +267,156 @@ public partial class MainForm : Form
     }
     private void TreeView0_BeforeSelect(System.Object? sender, System.Windows.Forms.TreeViewCancelEventArgs e)
     {
+        if (ini_Flag)
+        {
+            ini_Flag = false;
+            return;
+        }
+
+        TreeNode SelectedNode = new TreeNode();
+        SelectedNode = TreeView0.SelectedNode;
+        Update_Compilerflag_General(SelectedNode.Text);
+        Update_Compilerflag_Debugging(SelectedNode.Text);
+        Update_Compilerflag_Profilling(SelectedNode.Text);
+        Update_Compilerflag_Warnings(SelectedNode.Text);
+        Update_Compilerflag_Optimization(SelectedNode.Text);
 
     }
-    private void Update_Compilerflag_General()
+    private void Update_Compilerflag_General(string mode)
     {
-        project_compilerflag_general.Clear();
+        List<string> lst_compilerflag_general = new();
+
         for (int i = 0; i < CheckedListBox0.Items.Count; i++)
         {
             if (CheckedListBox0.GetItemChecked(i))
             {
                 string[] split = CheckedListBox0.Items[i].ToString()!.Split("[");
                 string? value = split[1].Replace("]", "");
-                project_compilerflag_general.Add(value);
+                lst_compilerflag_general.Add(value);
             }
         }
+
+        switch (mode)
+        {
+            case "Project":
+                project_compilerflag_general = lst_compilerflag_general;
+                break;
+            case "Debug":
+                debug_compilerflag_general = lst_compilerflag_general;
+                break;
+            case "Release":
+                release_compilerflag_general = lst_compilerflag_general;
+                break;
+        }
     }
+    private void Update_Compilerflag_Debugging(string mode)
+    {
+        List<string> lst_compilerflag_debugging = new();
+
+        for (int i = 0; i < CheckedListBox1.Items.Count; i++)
+        {
+            if (CheckedListBox1.GetItemChecked(i))
+            {
+                string[] split = CheckedListBox1.Items[i].ToString()!.Split("[");
+                string? value = split[1].Replace("]", "");
+                lst_compilerflag_debugging.Add(value);
+            }
+        }
+
+        switch (mode)
+        {
+            case "Project":
+                project_compilerflag_debugging = lst_compilerflag_debugging;
+                break;
+            case "Debug":
+                debug_compilerflag_debugging = lst_compilerflag_debugging;
+                break;
+            case "Release":
+                release_compilerflag_debugging = lst_compilerflag_debugging;
+                break;
+        }
+    }
+    private void Update_Compilerflag_Profilling(string mode)
+    {
+        List<string> lst_compilerflag_profilling = new();
+
+        for (int i = 0; i < CheckedListBox2.Items.Count; i++)
+        {
+            if (CheckedListBox2.GetItemChecked(i))
+            {
+                string[] split = CheckedListBox2.Items[i].ToString()!.Split("[");
+                string? value = split[1].Replace("]", "");
+                lst_compilerflag_profilling.Add(value);
+            }
+        }
+
+        switch (mode)
+        {
+            case "Project":
+                project_compilerflag_profilling = lst_compilerflag_profilling;
+                break;
+            case "Debug":
+                debug_compilerflag_profilling = lst_compilerflag_profilling;
+                break;
+            case "Release":
+                release_compilerflag_profilling = lst_compilerflag_profilling;
+                break;
+        }
+    }
+    private void Update_Compilerflag_Warnings(string mode)
+    {
+        List<string> lst_compilerflag_warnings = new();
+
+        for (int i = 0; i < CheckedListBox3.Items.Count; i++)
+        {
+            if (CheckedListBox3.GetItemChecked(i))
+            {
+                string[] split = CheckedListBox3.Items[i].ToString()!.Split("[");
+                string? value = split[1].Replace("]", "");
+                lst_compilerflag_warnings.Add(value);
+            }
+        }
+
+        switch (mode)
+        {
+            case "Project":
+                project_compilerflag_warning = lst_compilerflag_warnings;
+                break;
+            case "Debug":
+                debug_compilerflag_warning = lst_compilerflag_warnings;
+                break;
+            case "Release":
+                release_compilerflag_warning = lst_compilerflag_warnings;
+                break;
+        }
+    }
+    private void Update_Compilerflag_Optimization(string mode)
+    {
+        List<string> lst_compilerflag_optimization = new();
+
+        for (int i = 0; i < CheckedListBox4.Items.Count; i++)
+        {
+            if (CheckedListBox4.GetItemChecked(i))
+            {
+                string[] split = CheckedListBox4.Items[i].ToString()!.Split("[");
+                string? value = split[1].Replace("]", "");
+                lst_compilerflag_optimization.Add(value);
+            }
+        }
+
+        switch (mode)
+        {
+            case "Project":
+                project_compilerflag_optimization = lst_compilerflag_optimization;
+                break;
+            case "Debug":
+                debug_compilerflag_optimization = lst_compilerflag_optimization;
+                break;
+            case "Release":
+                release_compilerflag_optimization = lst_compilerflag_optimization;
+                break;
+        }
+    }
+
 
 }
