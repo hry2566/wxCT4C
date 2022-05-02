@@ -47,8 +47,8 @@ public partial class MainForm : Form
     internal List<string> project_search_resource_compiler_directory = new();
     internal List<string> debug_search_resource_compiler_directory = new();
     internal List<string> release_search_resource_compiler_directory = new();
-    cls_Files files;
-    bool ini_Flag = true;
+    private cls_Files files;
+    private bool ini_Flag = true;
     public MainForm()
     {
         InitializeComponent();
@@ -275,14 +275,41 @@ public partial class MainForm : Form
 
         TreeNode SelectedNode = new TreeNode();
         SelectedNode = TreeView0.SelectedNode;
-        Update_Compilerflag_General(SelectedNode.Text);
-        Update_Compilerflag_Debugging(SelectedNode.Text);
-        Update_Compilerflag_Profilling(SelectedNode.Text);
-        Update_Compilerflag_Warnings(SelectedNode.Text);
-        Update_Compilerflag_Optimization(SelectedNode.Text);
+        Update_Compiler_Flag_General(SelectedNode.Text);
+        Update_Compiler_Flag_Debugging(SelectedNode.Text);
+        Update_Compiler_Flag_Profilling(SelectedNode.Text);
+        Update_Compiler_Flag_Warnings(SelectedNode.Text);
+        Update_Compiler_Flag_Optimization(SelectedNode.Text);
+        Update_Other_Compiler_Options(SelectedNode.Text);
 
     }
-    private void Update_Compilerflag_General(string mode)
+    private void Update_Other_Compiler_Options(string mode)
+    {
+        List<string> lst_other_compiler_options = new();
+        string[] split = TextBox4.Text.Split(Environment.NewLine);
+
+        for (int i = 0; i < split.Count(); i++)
+        {
+            if (split[i] != "")
+            {
+                lst_other_compiler_options.Add(split[i]);
+            }
+        }
+
+        switch (mode)
+        {
+            case "Project":
+                project_other_compile_options = lst_other_compiler_options;
+                break;
+            case "Debug":
+                debug_other_compile_options = lst_other_compiler_options;
+                break;
+            case "Release":
+                release_other_compile_options = lst_other_compiler_options;
+                break;
+        }
+    }
+    private void Update_Compiler_Flag_General(string mode)
     {
         List<string> lst_compilerflag_general = new();
 
@@ -309,7 +336,7 @@ public partial class MainForm : Form
                 break;
         }
     }
-    private void Update_Compilerflag_Debugging(string mode)
+    private void Update_Compiler_Flag_Debugging(string mode)
     {
         List<string> lst_compilerflag_debugging = new();
 
@@ -336,7 +363,7 @@ public partial class MainForm : Form
                 break;
         }
     }
-    private void Update_Compilerflag_Profilling(string mode)
+    private void Update_Compiler_Flag_Profilling(string mode)
     {
         List<string> lst_compilerflag_profilling = new();
 
@@ -363,7 +390,7 @@ public partial class MainForm : Form
                 break;
         }
     }
-    private void Update_Compilerflag_Warnings(string mode)
+    private void Update_Compiler_Flag_Warnings(string mode)
     {
         List<string> lst_compilerflag_warnings = new();
 
@@ -390,7 +417,7 @@ public partial class MainForm : Form
                 break;
         }
     }
-    private void Update_Compilerflag_Optimization(string mode)
+    private void Update_Compiler_Flag_Optimization(string mode)
     {
         List<string> lst_compilerflag_optimization = new();
 
