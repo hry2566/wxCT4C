@@ -162,6 +162,7 @@ public partial class MainForm : Form
     }
     private void Button12_Click(System.Object? sender, System.EventArgs e)
     {
+        Update_Data();
         files.Save();
     }
     internal void Draw_Main_Items()
@@ -265,6 +266,46 @@ public partial class MainForm : Form
             CheckedListBox4.SetItemChecked(6, false);
         }
     }
+    private void Button8_Click(System.Object? sender, System.EventArgs e)
+    {
+        ListBox0.Items.Add("aaa");
+    }
+
+    private void Button9_Click(System.Object? sender, System.EventArgs e)
+    {
+        ListBox0.Items.Remove(ListBox0.SelectedItem);
+    }
+    private void Button10_Click(System.Object? sender, System.EventArgs e)
+    {
+        switch (TabControl2.SelectedIndex)
+        {
+            case 0:
+                ListBox1.Items.Add("aaa");
+                break;
+            case 1:
+                ListBox2.Items.Add("aaa");
+                break;
+            case 2:
+                ListBox3.Items.Add("aaa");
+                break;
+        }
+    }
+
+    private void Button11_Click(System.Object? sender, System.EventArgs e)
+    {
+        switch (TabControl2.SelectedIndex)
+        {
+            case 0:
+                ListBox1.Items.Remove(ListBox1.SelectedItem);
+                break;
+            case 1:
+                ListBox2.Items.Remove(ListBox2.SelectedItem);
+                break;
+            case 2:
+                ListBox3.Items.Remove(ListBox3.SelectedItem);
+                break;
+        }
+    }
     private void TreeView0_BeforeSelect(System.Object? sender, System.Windows.Forms.TreeViewCancelEventArgs e)
     {
         if (ini_Flag)
@@ -273,177 +314,24 @@ public partial class MainForm : Form
             return;
         }
 
+        Update_Data();
+    }
+    private void Update_Data()
+    {
         TreeNode SelectedNode = new TreeNode();
         SelectedNode = TreeView0.SelectedNode;
-        Update_Compiler_Flag_General(SelectedNode.Text);
-        Update_Compiler_Flag_Debugging(SelectedNode.Text);
-        Update_Compiler_Flag_Profilling(SelectedNode.Text);
-        Update_Compiler_Flag_Warnings(SelectedNode.Text);
-        Update_Compiler_Flag_Optimization(SelectedNode.Text);
-        Update_Other_Compiler_Options(SelectedNode.Text);
-
+        cls_Update Update_Data = new(this);
+        Update_Data.Update_Compiler_Flag_General(SelectedNode.Text, CheckedListBox0);
+        Update_Data.Update_Compiler_Flag_Debugging(SelectedNode.Text, CheckedListBox1);
+        Update_Data.Update_Compiler_Flag_Profilling(SelectedNode.Text, CheckedListBox2);
+        Update_Data.Update_Compiler_Flag_Warnings(SelectedNode.Text, CheckedListBox3);
+        Update_Data.Update_Compiler_Flag_Optimization(SelectedNode.Text, CheckedListBox4);
+        Update_Data.Update_Other_Compiler_Options(SelectedNode.Text, TextBox4);
+        Update_Data.Update_Other_Resource_Compiler_Options(SelectedNode.Text, TextBox5);
+        Update_Data.Update_Defines(SelectedNode.Text, TextBox6);
+        Update_Data.Update_Link_Settings(SelectedNode.Text, ListBox0, TextBox7);
+        Update_Data.Update_Search_Directories_Compiler(SelectedNode.Text, ListBox1);
+        Update_Data.Update_Search_Directories_Linker(SelectedNode.Text, ListBox2);
+        Update_Data.Update_Search_Directories_Resource_Compiler(SelectedNode.Text, ListBox3);
     }
-    private void Update_Other_Compiler_Options(string mode)
-    {
-        List<string> lst_other_compiler_options = new();
-        string[] split = TextBox4.Text.Split(Environment.NewLine);
-
-        for (int i = 0; i < split.Count(); i++)
-        {
-            if (split[i] != "")
-            {
-                lst_other_compiler_options.Add(split[i]);
-            }
-        }
-
-        switch (mode)
-        {
-            case "Project":
-                project_other_compile_options = lst_other_compiler_options;
-                break;
-            case "Debug":
-                debug_other_compile_options = lst_other_compiler_options;
-                break;
-            case "Release":
-                release_other_compile_options = lst_other_compiler_options;
-                break;
-        }
-    }
-    private void Update_Compiler_Flag_General(string mode)
-    {
-        List<string> lst_compilerflag_general = new();
-
-        for (int i = 0; i < CheckedListBox0.Items.Count; i++)
-        {
-            if (CheckedListBox0.GetItemChecked(i))
-            {
-                string[] split = CheckedListBox0.Items[i].ToString()!.Split("[");
-                string? value = split[1].Replace("]", "");
-                lst_compilerflag_general.Add(value);
-            }
-        }
-
-        switch (mode)
-        {
-            case "Project":
-                project_compilerflag_general = lst_compilerflag_general;
-                break;
-            case "Debug":
-                debug_compilerflag_general = lst_compilerflag_general;
-                break;
-            case "Release":
-                release_compilerflag_general = lst_compilerflag_general;
-                break;
-        }
-    }
-    private void Update_Compiler_Flag_Debugging(string mode)
-    {
-        List<string> lst_compilerflag_debugging = new();
-
-        for (int i = 0; i < CheckedListBox1.Items.Count; i++)
-        {
-            if (CheckedListBox1.GetItemChecked(i))
-            {
-                string[] split = CheckedListBox1.Items[i].ToString()!.Split("[");
-                string? value = split[1].Replace("]", "");
-                lst_compilerflag_debugging.Add(value);
-            }
-        }
-
-        switch (mode)
-        {
-            case "Project":
-                project_compilerflag_debugging = lst_compilerflag_debugging;
-                break;
-            case "Debug":
-                debug_compilerflag_debugging = lst_compilerflag_debugging;
-                break;
-            case "Release":
-                release_compilerflag_debugging = lst_compilerflag_debugging;
-                break;
-        }
-    }
-    private void Update_Compiler_Flag_Profilling(string mode)
-    {
-        List<string> lst_compilerflag_profilling = new();
-
-        for (int i = 0; i < CheckedListBox2.Items.Count; i++)
-        {
-            if (CheckedListBox2.GetItemChecked(i))
-            {
-                string[] split = CheckedListBox2.Items[i].ToString()!.Split("[");
-                string? value = split[1].Replace("]", "");
-                lst_compilerflag_profilling.Add(value);
-            }
-        }
-
-        switch (mode)
-        {
-            case "Project":
-                project_compilerflag_profilling = lst_compilerflag_profilling;
-                break;
-            case "Debug":
-                debug_compilerflag_profilling = lst_compilerflag_profilling;
-                break;
-            case "Release":
-                release_compilerflag_profilling = lst_compilerflag_profilling;
-                break;
-        }
-    }
-    private void Update_Compiler_Flag_Warnings(string mode)
-    {
-        List<string> lst_compilerflag_warnings = new();
-
-        for (int i = 0; i < CheckedListBox3.Items.Count; i++)
-        {
-            if (CheckedListBox3.GetItemChecked(i))
-            {
-                string[] split = CheckedListBox3.Items[i].ToString()!.Split("[");
-                string? value = split[1].Replace("]", "");
-                lst_compilerflag_warnings.Add(value);
-            }
-        }
-
-        switch (mode)
-        {
-            case "Project":
-                project_compilerflag_warning = lst_compilerflag_warnings;
-                break;
-            case "Debug":
-                debug_compilerflag_warning = lst_compilerflag_warnings;
-                break;
-            case "Release":
-                release_compilerflag_warning = lst_compilerflag_warnings;
-                break;
-        }
-    }
-    private void Update_Compiler_Flag_Optimization(string mode)
-    {
-        List<string> lst_compilerflag_optimization = new();
-
-        for (int i = 0; i < CheckedListBox4.Items.Count; i++)
-        {
-            if (CheckedListBox4.GetItemChecked(i))
-            {
-                string[] split = CheckedListBox4.Items[i].ToString()!.Split("[");
-                string? value = split[1].Replace("]", "");
-                lst_compilerflag_optimization.Add(value);
-            }
-        }
-
-        switch (mode)
-        {
-            case "Project":
-                project_compilerflag_optimization = lst_compilerflag_optimization;
-                break;
-            case "Debug":
-                debug_compilerflag_optimization = lst_compilerflag_optimization;
-                break;
-            case "Release":
-                release_compilerflag_optimization = lst_compilerflag_optimization;
-                break;
-        }
-    }
-
-
 }
