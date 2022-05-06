@@ -457,6 +457,7 @@ partial class MainForm
         this.Button8.Name =  "Button8";
         this.Button8.Size = new System.Drawing.Size(96,32);
         this.Button8.TabIndex = 32;
+        this.Button8.Click += new System.EventHandler(Button8_Click);
         //
         // Button9
         //
@@ -465,6 +466,7 @@ partial class MainForm
         this.Button9.Name =  "Button9";
         this.Button9.Size = new System.Drawing.Size(96,32);
         this.Button9.TabIndex = 33;
+        this.Button9.Click += new System.EventHandler(Button9_Click);
         //
         // TextBox7
         //
@@ -535,6 +537,7 @@ partial class MainForm
         this.Button10.Name =  "Button10";
         this.Button10.Size = new System.Drawing.Size(96,32);
         this.Button10.TabIndex = 40;
+        this.Button10.Click += new System.EventHandler(Button10_Click);
         //
         // Button11
         //
@@ -543,6 +546,7 @@ partial class MainForm
         this.Button11.Name =  "Button11";
         this.Button11.Size = new System.Drawing.Size(96,32);
         this.Button11.TabIndex = 41;
+        this.Button11.Click += new System.EventHandler(Button11_Click);
         //
         // Panel0
         //
@@ -834,6 +838,26 @@ partial class MainForm
 //}
 
 //private void TreeView0_BeforeSelect(System.Object? sender, System.Windows.Forms.TreeViewCancelEventArgs e)
+//{
+//
+//}
+
+//private void Button8_Click(System.Object? sender, System.EventArgs e)
+//{
+//
+//}
+
+//private void Button9_Click(System.Object? sender, System.EventArgs e)
+//{
+//
+//}
+
+//private void Button10_Click(System.Object? sender, System.EventArgs e)
+//{
+//
+//}
+
+//private void Button11_Click(System.Object? sender, System.EventArgs e)
 //{
 //
 //}
