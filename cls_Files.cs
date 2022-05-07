@@ -413,7 +413,7 @@ public partial class cls_Files
         if (mode == "directory")
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "フォルダを指定してください。";
+            fbd.Description = "Select Directory";
             fbd.RootFolder = Environment.SpecialFolder.Desktop;
             fbd.SelectedPath = Environment.CurrentDirectory;
             fbd.ShowNewFolderButton = true;
@@ -423,12 +423,12 @@ public partial class cls_Files
                 item = fbd.SelectedPath.Replace("\\", "/");
             }
         }
-        else
+        else if (mode == "file")
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.InitialDirectory = main.project_directory;
             ofd.Filter = "wxFormBuilder Project File(*.fbp;*.fbp)|*.fbp;*.fbp";
-            ofd.Title = "ファイルを選択してください";
+            ofd.Title = "Select File";
             ofd.RestoreDirectory = true;
 
             if (ofd.ShowDialog() == DialogResult.OK)
@@ -436,7 +436,28 @@ public partial class cls_Files
                 return ofd.FileName.Replace("\\", "/");
             }
         }
+        return item!;
+    }
+    internal List<string> Select_Dlg(string mode, List<string> item)
+    {
+        if (mode == "files")
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = main.project_directory;
+            ofd.Multiselect = true;
+            ofd.Filter = "Library Files(*.a;*.a)|*.a;*.a";
+            ofd.Title = "Select Files";
+            ofd.RestoreDirectory = true;
 
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                item.Clear();
+                for (int i = 0; i < ofd.FileNames.Count(); i++)
+                {
+                    item.Add(ofd.FileNames[i].Replace("\\", "/"));
+                }
+            }
+        }
         return item!;
     }
 }
