@@ -1,4 +1,5 @@
 
+using System.Threading;
 using System.Collections.Generic;
 namespace wxCT4C;
 
@@ -268,7 +269,13 @@ public partial class MainForm : Form
     }
     private void Button8_Click(System.Object? sender, System.EventArgs e)
     {
-        ListBox0.Items.Add("aaa");
+        List<string> fPath = files.Select_Dlg("files", new List<string>());
+
+        for (int i = 0; i < fPath.Count; i++)
+        {
+            string[] split = fPath[i].Split("/");
+            ListBox0.Items.Add(split[split.Length - 1]);
+        }
     }
 
     private void Button9_Click(System.Object? sender, System.EventArgs e)
@@ -277,16 +284,18 @@ public partial class MainForm : Form
     }
     private void Button10_Click(System.Object? sender, System.EventArgs e)
     {
+        string Path = files.Select_Dlg("directory", "");
+
         switch (TabControl2.SelectedIndex)
         {
             case 0:
-                ListBox1.Items.Add("aaa");
+                ListBox1.Items.Add(Path);
                 break;
             case 1:
-                ListBox2.Items.Add("aaa");
+                ListBox2.Items.Add(Path);
                 break;
             case 2:
-                ListBox3.Items.Add("aaa");
+                ListBox3.Items.Add(Path);
                 break;
         }
     }
