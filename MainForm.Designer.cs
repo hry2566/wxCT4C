@@ -437,6 +437,7 @@ partial class MainForm
         // Button6
         //
         this.Button6.Text =  "▲";
+        this.Button6.Enabled =  false;
         this.Button6.Location = new System.Drawing.Point(272,32);
         this.Button6.Name =  "Button6";
         this.Button6.Size = new System.Drawing.Size(40,32);
@@ -445,6 +446,7 @@ partial class MainForm
         // Button7
         //
         this.Button7.Text =  "▼";
+        this.Button7.Enabled =  false;
         this.Button7.Location = new System.Drawing.Point(272,72);
         this.Button7.Name =  "Button7";
         this.Button7.Size = new System.Drawing.Size(40,32);
