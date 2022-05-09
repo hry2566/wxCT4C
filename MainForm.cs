@@ -1,6 +1,5 @@
 
-using System.Threading;
-using System.Collections.Generic;
+using System.Reflection;
 namespace wxCT4C;
 
 public partial class MainForm : Form
@@ -342,5 +341,25 @@ public partial class MainForm : Form
         Update_Data.Update_Search_Directories_Compiler(SelectedNode.Text, ListBox1);
         Update_Data.Update_Search_Directories_Linker(SelectedNode.Text, ListBox2);
         Update_Data.Update_Search_Directories_Resource_Compiler(SelectedNode.Text, ListBox3);
+    }
+    private void Button4_Click(System.Object? sender, System.EventArgs e)
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        Stream? stream = assembly.GetManifestResourceStream("wxCT4C...wxWidgets.tasks.json");
+        StreamReader streamReader = new StreamReader(stream!);
+        string text = streamReader.ReadToEnd()!;
+        System.Console.WriteLine(text);
+
+        // 埋め込まれたリソース一覧の取得方法
+        // Assembly assembly2 = Assembly.GetExecutingAssembly();
+        // foreach (string name in assembly2.GetManifestResourceNames())
+        // {
+        //     Console.WriteLine($"Name: {name}");
+        // }
+    }
+
+    private void Button5_Click(System.Object? sender, System.EventArgs e)
+    {
+        Close();
     }
 }
