@@ -277,21 +277,23 @@ partial class MainForm
         //
         // Button4
         //
-        this.Button4.BackColor = System.Drawing.Color.WhiteSmoke;
         this.Button4.Text =  "OK";
         this.Button4.Location = new System.Drawing.Point(648,496);
         this.Button4.Name =  "Button4";
         this.Button4.Size = new System.Drawing.Size(96,32);
         this.Button4.TabIndex = 15;
+        this.Button4.BackColor = System.Drawing.Color.WhiteSmoke;
+        this.Button4.Click += new System.EventHandler(Button4_Click);
         //
         // Button5
         //
-        this.Button5.BackColor = System.Drawing.Color.WhiteSmoke;
-        this.Button5.Text =  "CANCEL";
+        this.Button5.Text =  "CLOSE";
         this.Button5.Location = new System.Drawing.Point(760,496);
         this.Button5.Name =  "Button5";
         this.Button5.Size = new System.Drawing.Size(96,32);
         this.Button5.TabIndex = 16;
+        this.Button5.BackColor = System.Drawing.Color.WhiteSmoke;
+        this.Button5.Click += new System.EventHandler(Button5_Click);
         //
         // TreeView0
         //
@@ -437,20 +439,20 @@ partial class MainForm
         // Button6
         //
         this.Button6.Text =  "▲";
-        this.Button6.Enabled =  false;
         this.Button6.Location = new System.Drawing.Point(272,32);
         this.Button6.Name =  "Button6";
         this.Button6.Size = new System.Drawing.Size(40,32);
         this.Button6.TabIndex = 30;
+        this.Button6.Enabled =  false;
         //
         // Button7
         //
         this.Button7.Text =  "▼";
-        this.Button7.Enabled =  false;
         this.Button7.Location = new System.Drawing.Point(272,72);
         this.Button7.Name =  "Button7";
         this.Button7.Size = new System.Drawing.Size(40,32);
         this.Button7.TabIndex = 31;
+        this.Button7.Enabled =  false;
         //
         // Button8
         //
@@ -668,12 +670,12 @@ partial class MainForm
         //
         // Button12
         //
-        this.Button12.BackColor = System.Drawing.Color.WhiteSmoke;
         this.Button12.Text =  "SAVE";
         this.Button12.Location = new System.Drawing.Point(168,496);
         this.Button12.Name =  "Button12";
         this.Button12.Size = new System.Drawing.Size(96,32);
         this.Button12.TabIndex = 56;
+        this.Button12.BackColor = System.Drawing.Color.WhiteSmoke;
         this.Button12.Click += new System.EventHandler(Button12_Click);
         //
         // ListBox1
@@ -830,6 +832,16 @@ partial class MainForm
 //}
 
 //private void Button3_Click(System.Object? sender, System.EventArgs e)
+//{
+//
+//}
+
+//private void Button4_Click(System.Object? sender, System.EventArgs e)
+//{
+//
+//}
+
+//private void Button5_Click(System.Object? sender, System.EventArgs e)
 //{
 //
 //}
