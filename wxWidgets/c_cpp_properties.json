@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/include",
+                "C:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/lib/gcc_lib/mswud",
+                "C:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/include"
+            ],
+            "defines": [
+                "_WINDOWS",
+                "_UNICODE",
+                "__WXMSW__",
+                "NDEBUG",
+                "NOPCH"
+            ],
+            // "compilerPath": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin/x86_64-w64-mingw32-g++.exe",
+            "compilerPath": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin/g++.exe",
+            "cStandard": "c11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "gcc-x86"
+        }
+    ],
+    "version": 4
+}
