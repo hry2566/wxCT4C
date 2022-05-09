@@ -1,0 +1,369 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        // Build-Common
+        {
+            "type": "shell",
+            "label": "Delete object",
+            "windows": {
+                "command": "if (Test-Path ./obj/debug){remove-item -path ./obj/debug/*.o} if (Test-Path ./obj/release){remove-item -path ./obj/release/*.o}"
+            }
+        },
+        // Build-Debug
+        {
+            "type": "shell",
+            "label": "Create Directory Debug",
+            "windows": {
+                "command": "if (-not (Test-Path ./obj/debug)){mkdir ./obj/debug} if (-not (Test-Path ./obj/release)){mkdir ./obj/release} if (-not (Test-Path ./bin/debug)){mkdir ./bin/debug} if (-not (Test-Path ./bin/release)){mkdir ./bin/release}",
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Delete object"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "Resource Compile Debug",
+            "options": {
+                "cwd": "{MinGW_directory}"
+                // "cwd": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin"
+            },
+            "windows": {
+                "command": "./windres.exe",
+                "args": [
+                    "-I{project_search_compiler_directory}",
+                    "-I{debug_search_compiler_directory}",
+                    // "-IC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/include",
+                    // "-IC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/lib/gcc_lib/mswud",
+                    "-J",
+                    "rc",
+                    "-O",
+                    "coff",
+                    "-i",
+                    "${workspaceFolder}/resource.rc",
+                    "-o",
+                    "${workspaceFolder}/obj/Debug/resource.res"
+                ]
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Create Directory Debug"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "Compile Debug",
+            "options": {
+                "cwd": "{MinGW_directory}"
+                // "cwd": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin"
+            },
+            "windows": {
+                "command": "./g++.exe",
+                "args": [
+                    "{project_other_compile_options}",
+                    "{debug_other_compile_options}",
+                    "{project_defines}",
+                    "{debug_defines}",
+                    "{project_compilerflag_warning}",
+                    "{debug_compilerflag_warning}",
+                    "{project_compilerflag_optimization}",
+                    "{debug_compilerflag_optimization}",
+                    "{project_compilerflag_debugging}",
+                    "{debug_compilerflag_debugging}",
+                    "{project_defines}",
+                    "{debug_defines}",
+                    "-I{project_search_compiler_directory}",
+                    "-I{debug_search_compiler_directory}",
+                    // "-pipe",
+                    // "-mthreads",
+                    // "-D__GNUWIN32__",
+                    // "-D__WXMSW__",
+                    // "-DwxUSE_UNICODE",
+                    // "-DWX_PRECOMP",
+                    // "-Wall",
+                    // "-g",
+                    // "-D__WXDEBUG__",
+                    // "-IC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/include",
+                    // "-IC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/lib/gcc_lib/mswud",
+                    "-c",
+                    "$(",
+                    "dir",
+                    "-Path",
+                    "${workspaceFolder}\\",
+                    "-Filter",
+                    "*.cpp",
+                    "-Recurse",
+                    "|",
+                    "%{$_.FullName}",
+                    ")"
+                ],
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Resource Compile Debug"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "Compile & Link Debug",
+            "options": {
+                "cwd": "{MinGW_directory}"
+                // "cwd": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin"
+            },
+            "windows": {
+                "command": "./g++.exe",
+                "args": [
+                    "-L{project_search_linker_directory}",
+                    "-L{debug_search_linker_directory}",
+                    // "-LC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/lib/gcc_lib",
+                    "-o",
+                    "${workspaceFolder}/bin/Debug/${workspaceFolderBasename}.exe",
+                    "$(",
+                    "dir",
+                    "-Path",
+                    "${workspaceFolder}/",
+                    "-Filter",
+                    "*.o",
+                    "-Recurse",
+                    "|",
+                    "%{$_.FullName}",
+                    ")",
+                    "${workspaceFolder}/obj/Debug/resource.res",
+                    "{project_link_options}",
+                    "{debug_link_options}",
+                    // "-mthreads",
+                    "{debug_link_libraries}",
+                    // "-lwxmsw31ud",
+                    // "-lwxpngd",
+                    // "-lwxjpegd",
+                    // "-lwxtiffd",
+                    // "-lwxzlibd",
+                    "{project_link_libraries}",
+                    // "-lkernel32",
+                    // "-luser32",
+                    // "-lgdi32",
+                    // "-lwinspool",
+                    // "-lcomdlg32",
+                    // "-ladvapi32",
+                    // "-lshell32",
+                    // "-lole32",
+                    // "-loleaut32",
+                    // "-luuid",
+                    // "-lcomctl32",
+                    // "-lwsock32",
+                    // "-lodbc32",
+                    // "-lshlwapi",
+                    // "-lversion",
+                    // "-loleacc",
+                    // "-luxtheme",
+                    "-mwindows"
+                ]
+            },
+            "group": {
+                "kind": "build",
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "MoveObjects Debug"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "MoveObjects Debug",
+            "windows": {
+                "command": "Move-Item",
+                "args": [
+                    "-Path",
+                    "{MinGW_directory}/*.o",
+                    // "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin/*.o",
+                    "-Destination",
+                    "${workspaceFolder}/obj/Debug",
+                    "-Force"
+                ]
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Compile Debug"
+            ]
+        },
+        // Build-Release
+        {
+            "type": "shell",
+            "label": "Create Directory Release",
+            "windows": {
+                "command": "if (-not (Test-Path ./obj/debug)){mkdir ./obj/debug} if (-not (Test-Path ./obj/release)){mkdir ./obj/release} if (-not (Test-Path ./bin/debug)){mkdir ./bin/debug} if (-not (Test-Path ./bin/release)){mkdir ./bin/release}",
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Delete object"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "Resource Compile Release",
+            "options": {
+                "cwd": "{MinGW_directory}"
+                // "cwd": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin"
+            },
+            "windows": {
+                "command": "./windres.exe",
+                "args": [
+                    "-I{project_search_compiler_directory}",
+                    "-I{release_search_compiler_directory}",
+                    // "-IC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/include",
+                    // "-IC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/lib/gcc_lib/mswu",
+                    "-J",
+                    "rc",
+                    "-O",
+                    "coff",
+                    "-i",
+                    "${workspaceFolder}/resource.rc",
+                    "-o",
+                    "${workspaceFolder}/obj/release/resource.res"
+                ]
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Create Directory Release"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "Compile Release",
+            "options": {
+                "cwd": "{MinGW_directory}"
+                // "cwd": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin"
+            },
+            "windows": {
+                // "command": "./x86_64-w64-mingw32-g++.exe",
+                "command": "./g++.exe",
+                "args": [
+                    "{project_other_compile_options}",
+                    "{release_other_compile_options}",
+                    "{project_defines}",
+                    "{release_defines}",
+                    "{project_compilerflag_warning}",
+                    "{release_compilerflag_warning}",
+                    "{project_compilerflag_optimization}",
+                    "{release_compilerflag_optimization}",
+                    "{project_compilerflag_debugging}",
+                    "{release_compilerflag_debugging}",
+                    "{project_defines}",
+                    "{release_defines}",
+                    "-I{project_search_compiler_directory}",
+                    "-I{release_search_compiler_directory}",
+                    // "-pipe",
+                    // "-mthreads",
+                    // "-D__GNUWIN32__",
+                    // "-D__WXMSW__",
+                    // "-DwxUSE_UNICODE",
+                    // "-DWX_PRECOMP",
+                    // "-Wall",
+                    // "-O2",
+                    // "-IC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/include",
+                    // "-IC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/lib/gcc_lib/mswu",
+                    "-c",
+                    "$(",
+                    "dir",
+                    "-Path",
+                    "${workspaceFolder}/",
+                    "-Filter",
+                    "*.cpp",
+                    "-Recurse",
+                    "|",
+                    "%{$_.FullName}",
+                    ")"
+                ],
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Resource Compile Release"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "Compile & Link Release",
+            "options": {
+                "cwd": "{MinGW_directory}"
+                // "cwd": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin"
+            },
+            "windows": {
+                "command": "./g++.exe",
+                "args": [
+                    "-L{project_search_linker_directory}",
+                    "-L{debug_search_linker_directory}",
+                    // "-LC:/Users/HRY/0000_APPS/CodeBlocks/Library/wxWidgets/64bit/lib/gcc_lib",
+                    "-o",
+                    "${workspaceFolder}/bin/release/${workspaceFolderBasename}.exe",
+                    "$(",
+                    "dir",
+                    "-Path",
+                    "${workspaceFolder}\\",
+                    "-Filter",
+                    "*.o",
+                    "-Recurse",
+                    "|",
+                    "%{$_.FullName}",
+                    ")",
+                    "${workspaceFolder}/obj/release/resource.res",
+                    "{project_compilerflag_optimization}",
+                    "{release_compilerflag_optimization}",
+                    "{project_compilerflag_general}",
+                    "{release_compilerflag_general}",
+                    // "-s",
+                    // "-static",
+                    "-mthreads",
+                    "-lwxmsw31u",
+                    "-lwxpng",
+                    "-lwxjpeg",
+                    "-lwxtiff",
+                    "-lwxzlib",
+                    "-lkernel32",
+                    "-luser32",
+                    "-lgdi32",
+                    "-lwinspool",
+                    "-lcomdlg32",
+                    "-ladvapi32",
+                    "-lshell32",
+                    "-lole32",
+                    "-loleaut32",
+                    "-luuid",
+                    "-lcomctl32",
+                    "-lwsock32",
+                    "-lodbc32",
+                    "-lshlwapi",
+                    "-lversion",
+                    "-loleacc",
+                    "-luxtheme",
+                    "-mwindows"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "MoveObjects Release"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "MoveObjects Release",
+            "windows": {
+                "command": "Move-Item",
+                "args": [
+                    "-Path",
+                    "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin/*.o",
+                    "-Destination",
+                    "${workspaceFolder}/obj/release",
+                    "-Force"
+                ]
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Compile Release"
+            ]
+        }
+    ]
+}
