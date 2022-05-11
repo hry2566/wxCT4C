@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="./wxWidgets/tasks.json" />
+    <EmbeddedResource Include="./wxWidgets/launch.json" />
   </ItemGroup>
 
 </Project>
