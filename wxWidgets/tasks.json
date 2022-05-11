@@ -25,7 +25,7 @@
             "type": "shell",
             "label": "Resource Compile Debug",
             "options": {
-                "cwd": "{MinGW_directory}"
+                "cwd": "{MinGW_directory}/bin"
             },
             "windows": {
                 "command": "./windres.exe",
@@ -51,7 +51,7 @@
             "type": "shell",
             "label": "Compile Debug",
             "options": {
-                "cwd": "{MinGW_directory}"
+                "cwd": "{MinGW_directory}/bin"
             },
             "windows": {
                 "command": "./g++.exe",
@@ -90,7 +90,7 @@
             "type": "shell",
             "label": "Compile & Link Debug",
             "options": {
-                "cwd": "{MinGW_directory}"
+                "cwd": "{MinGW_directory}/bin"
             },
             "windows": {
                 "command": "./g++.exe",
@@ -132,7 +132,7 @@
                 "command": "Move-Item",
                 "args": [
                     "-Path",
-                    "{MinGW_directory}/*.o",
+                    "{MinGW_directory}/bin/*.o",
                     "-Destination",
                     "${workspaceFolder}/obj/Debug",
                     "-Force"
@@ -159,7 +159,7 @@
             "type": "shell",
             "label": "Resource Compile Release",
             "options": {
-                "cwd": "{MinGW_directory}"
+                "cwd": "{MinGW_directory}/bin"
             },
             "windows": {
                 "command": "./windres.exe",
@@ -185,7 +185,7 @@
             "type": "shell",
             "label": "Compile Release",
             "options": {
-                "cwd": "{MinGW_directory}"
+                "cwd": "{MinGW_directory}/bin"
             },
             "windows": {
                 "command": "./g++.exe",
@@ -224,7 +224,7 @@
             "type": "shell",
             "label": "Compile & Link Release",
             "options": {
-                "cwd": "{MinGW_directory}"
+                "cwd": "{MinGW_directory}/bin"
             },
             "windows": {
                 "command": "./g++.exe",
@@ -271,7 +271,7 @@
                 "command": "Move-Item",
                 "args": [
                     "-Path",
-                    "{MinGW_directory}/*.o",
+                    "{MinGW_directory}/bin/*.o",
                     "-Destination",
                     "${workspaceFolder}/obj/release",
                     "-Force"
