@@ -11,7 +11,7 @@
             "windows": {
                 "program": "${workspaceFolder}/bin/Debug/${workspaceFolderBasename}.exe",
                 "MIMode": "gdb",
-                "miDebuggerPath": "C:/Users/HRY/0000_APPS/CodeBlocks/MinGW/bin/gdb.exe"
+                "miDebuggerPath": "{MinGW_directory}/bin/gdb.exe"
             },
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
