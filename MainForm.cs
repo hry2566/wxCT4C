@@ -348,6 +348,16 @@ public partial class MainForm : Form
         Stream? stream = assembly.GetManifestResourceStream("wxCT4C...wxWidgets.tasks.json");
         StreamReader streamReader = new StreamReader(stream!);
         string text = streamReader.ReadToEnd()!;
+        // System.Console.WriteLine(text);
+
+        string[] split = text.Split("\n");
+
+        text = "";
+        for (int i = 0; i < split.Length; i++)
+        {
+            text += Write_Config(split[i]);
+        }
+
         System.Console.WriteLine(text);
 
         // 埋め込まれたリソース一覧の取得方法
@@ -356,6 +366,111 @@ public partial class MainForm : Form
         // {
         //     Console.WriteLine($"Name: {name}");
         // }
+    }
+
+    private string Write_Config(string line)
+    {
+        string dummy = line;
+        line = "";
+
+        if (dummy.IndexOf("{MinGW_directory}") > -1)
+        {
+            line = dummy.Replace("{MinGW_directory}", MinGW_directory) + "\n";
+        }
+
+        else if (dummy.IndexOf("{project_search_compiler_directory}") > -1)
+        {
+            for (int i = 0; i < project_search_compiler_directory.Count; i++)
+            {
+                line += dummy.Replace("{project_search_compiler_directory}", project_search_compiler_directory[i]) + "\n";
+            }
+        }
+        else if (dummy.IndexOf("{debug_search_compiler_directory}") > -1)
+        {
+            for (int i = 0; i < debug_search_compiler_directory.Count; i++)
+            {
+                line += dummy.Replace("{debug_search_compiler_directory}", debug_search_compiler_directory[i]) + "\n";
+            }
+        }
+        else if (dummy.IndexOf("{release_search_compiler_directory}") > -1)
+        {
+            for (int i = 0; i < release_search_compiler_directory.Count; i++)
+            {
+                line += dummy.Replace("{release_search_compiler_directory}", release_search_compiler_directory[i]) + "\n";
+            }
+        }
+
+        else if (dummy.IndexOf("{project_other_compile_options}") > -1)
+        {
+            for (int i = 0; i < project_other_compile_options.Count; i++)
+            {
+                line += dummy.Replace("{project_other_compile_options}", project_other_compile_options[i]) + "\n";
+            }
+        }
+        else if (dummy.IndexOf("{debug_other_compile_options}") > -1)
+        {
+            for (int i = 0; i < debug_other_compile_options.Count; i++)
+            {
+                line += dummy.Replace("{debug_other_compile_options}", debug_other_compile_options[i]) + "\n";
+            }
+        }
+        else if (dummy.IndexOf("{release_other_compile_options}") > -1)
+        {
+            for (int i = 0; i < release_other_compile_options.Count; i++)
+            {
+                line += dummy.Replace("{release_other_compile_options}", release_other_compile_options[i]) + "\n";
+            }
+        }
+
+        else if (dummy.IndexOf("{project_defines}") > -1)
+        {
+            for (int i = 0; i < project_defines.Count; i++)
+            {
+                line += dummy.Replace("{project_defines}", project_defines[i]) + "\n";
+            }
+        }
+        else if (dummy.IndexOf("{debug_defines}") > -1)
+        {
+            for (int i = 0; i < debug_defines.Count; i++)
+            {
+                line += dummy.Replace("{debug_defines}", debug_defines[i]) + "\n";
+            }
+        }
+        else if (dummy.IndexOf("{release_defines}") > -1)
+        {
+            for (int i = 0; i < release_defines.Count; i++)
+            {
+                line += dummy.Replace("{release_defines}", release_defines[i]) + "\n";
+            }
+        }
+
+        else if (dummy.IndexOf("{project_compilerflag_warning}") > -1)
+        {
+            for (int i = 0; i < project_compilerflag_warning.Count; i++)
+            {
+                line += dummy.Replace("{project_compilerflag_warning}", project_compilerflag_warning[i]) + "\n";
+            }
+        }
+        else if (dummy.IndexOf("{debug_compilerflag_warning}") > -1)
+        {
+            for (int i = 0; i < debug_compilerflag_warning.Count; i++)
+            {
+                line += dummy.Replace("{debug_compilerflag_warning}", debug_compilerflag_warning[i]) + "\n";
+            }
+        }
+        else if (dummy.IndexOf("{release_compilerflag_warning}") > -1)
+        {
+            for (int i = 0; i < release_compilerflag_warning.Count; i++)
+            {
+                line += dummy.Replace("{release_compilerflag_warning}", release_compilerflag_warning[i]) + "\n";
+            }
+        }
+
+        else
+        {
+            line = dummy + "\n";
+        }
+        return line;
     }
 
     private void Button5_Click(System.Object? sender, System.EventArgs e)
