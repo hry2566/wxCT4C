@@ -62,8 +62,6 @@
                 "args": [
                     "{project_other_compile_options}",
                     "{debug_other_compile_options}",
-                    "{project_defines}",
-                    "{debug_defines}",
                     "{project_compilerflag_warning}",
                     "{debug_compilerflag_warning}",
                     "{project_compilerflag_optimization}",
@@ -240,8 +238,6 @@
                 "args": [
                     "{project_other_compile_options}",
                     "{release_other_compile_options}",
-                    "{project_defines}",
-                    "{release_defines}",
                     "{project_compilerflag_warning}",
                     "{release_compilerflag_warning}",
                     "{project_compilerflag_optimization}",
