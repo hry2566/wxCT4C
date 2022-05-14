@@ -12,6 +12,8 @@
     <EmbeddedResource Include="./wxWidgets/launch.json" />
     <EmbeddedResource Include="./wxWidgets/c_cpp_properties.json" />
     <EmbeddedResource Include="./wxWidgets/resource.rc" />
+    <EmbeddedResource Include="./wxWidgets/BaseApp.cpp" />
+    <EmbeddedResource Include="./wxWidgets/BaseApp.h" />
   </ItemGroup>
 
 </Project>
