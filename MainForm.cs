@@ -1,4 +1,5 @@
 
+using System.Threading;
 using System.Reflection;
 namespace wxCT4C;
 
@@ -344,6 +345,83 @@ public partial class MainForm : Form
     }
     private void Button4_Click(System.Object? sender, System.EventArgs e)
     {
+        if (!Directory.Exists(project_directory)) { return; }
+
+        if (!System.IO.File.Exists(wxFormBuilder_project_file)) { return; }
+
+        Create_dot_vscode();
+
+        if (!File.Exists(project_directory + "/resource.rc"))
+        {
+            Create_Resource_File();
+        }
+
+        if (!(File.Exists(project_directory + "/BaseApp.h") && File.Exists(project_directory + "/BaseApp.h")))
+        {
+            string project_name = "";
+            string frame_name = "";
+            string text;
+            string[] split;
+
+            StreamReader sr = new StreamReader(wxFormBuilder_project_file);
+            text = sr.ReadToEnd();
+            sr.Close();
+            split = text.Split("\r\n");
+
+            bool flag = false;
+            for (int i = 0; i < split.Length; i++)
+            {
+                if (split[i].IndexOf("<property name=\"file\">") > -1)
+                {
+                    project_name = split[i].Replace("<property name=\"file\">", "").Replace("</property>", "").Trim();
+                }
+
+                if (split[i].IndexOf("<object class=\"Frame\"") > -1)
+                {
+                    flag = true;
+                }
+
+                if (split[i].IndexOf("<property name=\"name\">") > -1 && flag)
+                {
+                    frame_name = split[i].Replace("<property name=\"name\">", "").Replace("</property>", "").Trim();
+                }
+            }
+
+            Create_BaseApp_File(project_name, frame_name);
+        }
+    }
+    private void Create_BaseApp_File(string project_name, string frame_name)
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        Stream? stream = assembly.GetManifestResourceStream("wxCT4C...wxWidgets.BaseApp.h");
+        StreamReader sr = new StreamReader(stream!);
+        string text = sr.ReadToEnd()!;
+        sr.Close();
+        StreamWriter sw = new StreamWriter(project_directory + "/BaseApp.h");
+        sw.Write(text);
+        sw.Close();
+
+        stream = assembly.GetManifestResourceStream("wxCT4C...wxWidgets.BaseApp.cpp");
+        sr = new StreamReader(stream!);
+        text = sr.ReadToEnd()!;
+        sr.Close();
+        text = text.Replace("{project_name}", project_name).Replace("{frame_name}", frame_name);
+        sw = new StreamWriter(project_directory + "/BaseApp.cpp");
+        sw.Write(text);
+        sw.Close();
+    }
+    private void Create_Resource_File()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        Stream? stream = assembly.GetManifestResourceStream("wxCT4C...wxWidgets.resource.rc");
+        StreamReader sr = new StreamReader(stream!);
+        string text = sr.ReadToEnd()!;
+        StreamWriter sw = new StreamWriter(project_directory + "/resource.rc");
+        sw.Write(text);
+        sw.Close();
+    }
+    private void Create_dot_vscode()
+    {
         cls_Config config = new(this);
         Assembly assembly = Assembly.GetExecutingAssembly();
         Stream? stream;
@@ -351,7 +429,7 @@ public partial class MainForm : Form
         string text;
         string[] split;
         StreamWriter sw;
-        Directory.CreateDirectory(project_directory + "\\.vscode");
+        Directory.CreateDirectory(project_directory + "/.vscode");
         List<string> fileNames = new List<string>{
             "tasks.json",
             "launch.json",
@@ -370,7 +448,7 @@ public partial class MainForm : Form
             {
                 text += config.Write_Config(split[i]);
             }
-            sw = new StreamWriter(project_directory + "\\.vscode\\" + fileNames[j]);
+            sw = new StreamWriter(project_directory + "/.vscode/" + fileNames[j]);
             sw.Write(text);
             sw.Close();
         }
