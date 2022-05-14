@@ -384,6 +384,7 @@ public partial class MainForm : Form
                 if (split[i].IndexOf("<property name=\"name\">") > -1 && flag)
                 {
                     frame_name = split[i].Replace("<property name=\"name\">", "").Replace("</property>", "").Trim();
+                    break;
                 }
             }
 
