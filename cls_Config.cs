@@ -16,6 +16,10 @@ public partial class cls_Config
         {
             line = dummy.Replace("{MinGW_directory}", main.MinGW_directory!.Replace("\\", "/")) + "\n";
         }
+        else if (dummy.IndexOf("{wxWidgets_directory}") > -1)
+        {
+            line = dummy.Replace("{wxWidgets_directory}", main.wxWidgets_directory!.Replace("\\", "/")) + "\n";
+        }
 
         else if (dummy.IndexOf("{project_search_compiler_directory}") > -1)
         {
